@@ -20,6 +20,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@main
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'     
+
     - name: Restore
       run: dotnet restore
 
@@ -61,5 +66,28 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ env.resourceGroupName }}
         template: ./scripts/main.bicep
+
+  deploy:
+    name: Deploy
+    needs: provisioning
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: 'Artifacts'
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}  
+  
+    - name: Deploy Api
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'app-fagkveld'
+        package:  '.'
+        startup-command: 'dotnet src.dll'
 
     

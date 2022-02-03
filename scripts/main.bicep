@@ -1,17 +1,14 @@
-// Already in the context of a resource group
-
-
 resource plan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'plan-fagkveld'
   location: resourceGroup().location
   properties: {
     reserved: true
   }
+  kind: 'linux'
   sku: {
     name: 'B1'
     tier: 'Basic'
   }
-  kind: 'linux'
 }
 
 resource appi 'Microsoft.Insights/components@2020-02-02' = {
@@ -28,16 +25,14 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
   location: resourceGroup().location
   properties: {
     serverFarmId: plan.id
-    httpsOnly: true
     siteConfig: {
-      // healthCheckPath: '/'
       linuxFxVersion: 'DOTNETCORE|6.0'
       appSettings: [
-        { 
+        {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appi.properties.InstrumentationKey
         }
       ]
     }
-  }  
+  }
 }

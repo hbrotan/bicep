@@ -60,6 +60,6 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ env.resourceGroupName }}
-        template: main.bicep
+        template: ./scripts/main.bicep
 
     

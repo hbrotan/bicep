@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-action.json
+name: Deploy
+description: Deploy action
+inputs:
+
+  azure_credentials:
+    description: 'Azure credentials'
+    required: true
+
+  app_name:
+    description: 'App name'
+    required: true    
+
+  app_name_azure:
+    description: 'App name in Azure'
+    required: true  
+
+  dotnet_version: 
+    description: '.NET version'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:        
+        dotnet-version: ${{ inputs.dotnet_version }}
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: 'Artifacts'
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ inputs.azure_credentials }}
+
+    - name: Deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ inputs.app_name_azure }}
+        package:  '.'
+        startup-command: 'dotnet ${{ inputs.app_name_csproj }}.dll'

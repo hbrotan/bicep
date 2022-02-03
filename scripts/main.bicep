@@ -4,11 +4,14 @@
 resource plan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'plan-fagkveld'
   location: resourceGroup().location
+  properties: {
+    reserved: true
+  }
   sku: {
     name: 'F1'
     tier: 'Free'
   }
-  kind: 'linux'
+  kind: 'app,linux'
 }
 
 resource appi 'Microsoft.Insights/components@2020-02-02' = {
@@ -22,7 +25,7 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
 
 resource app 'Microsoft.Web/sites@2021-02-01' = {
   name: 'app-fagkveld'
-  location: resourceGroup().location  
+  location: resourceGroup().location
   properties: {
     serverFarmId: plan.id
     httpsOnly: true

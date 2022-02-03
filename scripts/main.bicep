@@ -11,7 +11,7 @@ resource plan 'Microsoft.Web/serverfarms@2021-02-01' = {
     name: 'F1'
     tier: 'Free'
   }
-  kind: 'app,linux'
+  kind: 'linux'
 }
 
 resource appi 'Microsoft.Insights/components@2020-02-02' = {

@@ -8,8 +8,8 @@ resource plan 'Microsoft.Web/serverfarms@2021-02-01' = {
     reserved: true
   }
   sku: {
-    name: 'F1'
-    tier: 'Free'
+    name: 'B1'
+    tier: 'Basic'
   }
   kind: 'linux'
 }
@@ -19,7 +19,7 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
   location: resourceGroup().location
   kind: 'web'
   properties: {
-      Application_Type: 'web'
+    Application_Type: 'web'
   }
 }
 

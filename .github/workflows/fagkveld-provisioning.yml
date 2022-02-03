@@ -10,28 +10,6 @@ env:
   location: norwayeast
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@main
-    - name: Restore
-      run: dotnet restore
-    - name: Build
-      run: dotnet build -c Release --nologo --no-restore
-    - name: Publish
-      run: dotnet publish -c Release -o ./artifacts --self-contained false --nologo --no-restore --no-build
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'Artifacts'
-        path: '/artifacts'
-        if-no-files-found: error     
-
   provisioning:
     name: Create Azure resources
     runs-on: ubuntu-latest

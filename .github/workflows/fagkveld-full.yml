@@ -84,7 +84,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}  
   
-    - name: Deploy Api
+    - name: Deploy code
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'app-fagkveld'

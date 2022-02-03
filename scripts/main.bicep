@@ -30,7 +30,7 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
     serverFarmId: plan.id
     httpsOnly: true
     siteConfig: {
-      healthCheckPath: '/healthz'      
+      // healthCheckPath: '/'
       linuxFxVersion: 'DOTNETCORE|6.0'
       appSettings: [
         { 

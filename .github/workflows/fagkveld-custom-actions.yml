@@ -74,7 +74,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Download artifacts
+    - name: Checkout code
+      uses: actions/checkout@main
+
+    - name: Deploy action
       uses: ./.github/actions/deploy
       with:
         azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

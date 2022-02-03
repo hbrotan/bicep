@@ -22,16 +22,19 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
 
 resource app 'Microsoft.Web/sites@2021-02-01' = {
   name: 'app-fagkveld'
-  location: resourceGroup().location
+  location: resourceGroup().location  
   properties: {
-    siteConfig: {
-        appSettings: [
-            { 
-                name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-                value: appi.properties.InstrumentationKey
-            }           
-        ]
-    }
     serverFarmId: plan.id
+    httpsOnly: true
+    siteConfig: {
+      healthCheckPath: '/healthz'      
+      linuxFxVersion: 'DOTNETCORE|6.0'
+      appSettings: [
+        { 
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appi.properties.InstrumentationKey
+        }
+      ]
+    }
   }  
 }
